@@ -24,7 +24,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tws.entity.ParkingBoy;
+import tws.entity.ParkingLot;
 import tws.repository.ParkingBoyMapper;
+import tws.repository.ParkingLotMapper;
 
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
@@ -39,6 +41,9 @@ public class ParkingBoyControllerTest {
 
 	@Autowired
 	private ParkingBoyMapper parkingBoyMapper;
+	
+	@Autowired
+	private ParkingLotMapper parkingLotMapper;
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
@@ -58,6 +63,20 @@ public class ParkingBoyControllerTest {
 				.andExpect(content().json(getString));
 	}
 
+	@Test
+	public void shouldReturnParkingLotList() throws Exception {
+		jdbcTemplate.execute("INSERT INTO parking_boy VALUES(1,'zhangsan')");
+		jdbcTemplate.execute("INSERT INTO parking_lot VALUES(1,10,10,1)");
+		ParkingBoy parkingBoy = parkingBoyMapper.selectById(1);
+		List<ParkingLot> parkingLots = parkingLotMapper.selectByParkingBoyId(1);
+		parkingBoy.setParkingLots(parkingLots);
+
+		String getString = ObjectMapper.writeValueAsString(parkingBoy);
+		this.mockMvc.perform(get("/parkingboys/" + 1 +"/parkinglots"))
+		.andDo(print()).andExpect(status().isOk())
+				.andExpect(content().json(getString));
+	}
+	
 	@Test
 	@AfterAll
 	public void shouldReturnCreateCompany() throws Exception {

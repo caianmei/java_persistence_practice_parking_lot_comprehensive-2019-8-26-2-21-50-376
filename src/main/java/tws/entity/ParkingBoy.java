@@ -8,7 +8,7 @@ public class ParkingBoy {
 	private int employeeId;
 	private String name;
 
-	private List<Integer> parkingLots = new ArrayList<Integer>();
+	private List<ParkingLot> parkingLots = new ArrayList<ParkingLot>();
 	
 	public ParkingBoy() {
 		
@@ -35,11 +35,11 @@ public class ParkingBoy {
 		this.name = name;
 	}
 
-	public List<Integer> getParkingLots() {
+	public List<ParkingLot> getParkingLots() {
 		return parkingLots;
 	}
 
-	public void setParkingLots(List<Integer> parkingLots) {
-		this.parkingLots = parkingLots;
+	public void setParkingLots(List<ParkingLot> parkingLots2) {
+		this.parkingLots = parkingLots2;
 	}
 }

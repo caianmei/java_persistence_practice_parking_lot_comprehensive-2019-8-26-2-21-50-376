@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import tws.entity.ParkingBoy;
 import tws.entity.ParkingLot;
 import tws.repository.ParkingLotMapper;
 

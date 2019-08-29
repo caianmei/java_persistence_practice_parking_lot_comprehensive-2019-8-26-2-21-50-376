@@ -14,6 +14,9 @@ public interface ParkingBoyMapper {
 	
 	@Select("select * from parking_boy")
     List<ParkingBoy> selectAll();
+	
+	@Select("select * from parking_boy where employeeId = #{id}")
+    ParkingBoy selectById(@Param("id")int id);
     
 	@Insert("insert into parking_boy values(#{parkingBoy.employeeId},#{parkingBoy.name})")
    void insert(@Param("parkingBoy") ParkingBoy parkingBoy);
