@@ -10,6 +10,12 @@ public class ParkingLot {
 	
 	private int parkingBoyId;
 	
+	public ParkingLot(int parkingLotId,int availablePositionCount,int capatity) {
+		this.parkingLotId = parkingLotId;
+		this.availablePositionCount = availablePositionCount;
+		this.capatity = capatity;
+	}
+	
 	public ParkingLot() {
 		
 	}

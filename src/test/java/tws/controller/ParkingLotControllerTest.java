@@ -9,17 +9,21 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.jdbc.JdbcTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import tws.entity.ParkingBoy;
 import tws.entity.ParkingLot;
 import tws.repository.ParkingLotMapper;
 
@@ -53,5 +57,18 @@ public class ParkingLotControllerTest {
 		String getString = ObjectMapper.writeValueAsString(parkingLoyList);
 		this.mockMvc.perform(get("/parkinglots")).andDo(print()).andExpect(status().isOk())
 				.andExpect(content().json(getString));
+	}
+	
+	@Test
+	@AfterAll
+	public void shouldReturnCreateParkingLot() throws Exception {
+		ParkingLot parkingLoy = new ParkingLot(2, 10,10);
+		String postString = ObjectMapper.writeValueAsString(parkingLoy);
+		this.mockMvc
+				.perform(MockMvcRequestBuilders.post("/parkinglots")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(postString))
+				.andDo(print()).andExpect(status().isCreated())
+				.andExpect(content().json(postString));
 	}
 }
