@@ -14,7 +14,7 @@ CREATE TABLE `parking_lot` (
 
 `parking_lot_id` int(10) NOT NULL,
 
-`availablePositionCount` int(3) NULL,
+`available_position_count` int(3) NULL,
 
 `capatity` int(3) NULL,
 

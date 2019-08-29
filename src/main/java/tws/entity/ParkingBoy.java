@@ -1,10 +1,15 @@
 package tws.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ParkingBoy {
 
 	private int employeeId;
 	private String name;
 
+	private List<Integer> parkingLots = new ArrayList<Integer>();
+	
 	public ParkingBoy() {
 		
 	}
@@ -28,5 +33,13 @@ public class ParkingBoy {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<Integer> getParkingLots() {
+		return parkingLots;
+	}
+
+	public void setParkingLots(List<Integer> parkingLots) {
+		this.parkingLots = parkingLots;
 	}
 }
