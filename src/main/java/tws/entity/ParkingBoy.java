@@ -9,6 +9,11 @@ public class ParkingBoy {
 		
 	}
 	
+	public ParkingBoy(int employeeId,String name) {
+		this.employeeId = employeeId;
+		this.name = name;
+	}
+	
 	public int getEmployeeId() {
 		return employeeId;
 	}

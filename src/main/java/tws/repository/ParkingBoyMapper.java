@@ -16,5 +16,5 @@ public interface ParkingBoyMapper {
     List<ParkingBoy> selectAll();
     
 	@Insert("insert into parking_boy values(#{parkingBoy.employeeId},#{parkingBoy.name})")
-   void insert(@Param("parkingBoy") ParkingBoy employee);
+   void insert(@Param("parkingBoy") ParkingBoy parkingBoy);
 }
