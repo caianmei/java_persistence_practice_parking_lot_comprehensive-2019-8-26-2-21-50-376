@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,13 +54,20 @@ public class ParkingBoyControllerTest {
 		JdbcTestUtils.deleteFromTables(jdbcTemplate, "parking_boy");
 	}
 
+	@BeforeEach
+	public void deleteFrromTable() throws Exception{
+		jdbcTemplate.execute("delete from parking_boy");
+		jdbcTemplate.execute("delete from parking_lot");
+	}
 	@Test
 	public void shouldReturnParkingBoyList() throws Exception {
 		jdbcTemplate.execute("INSERT INTO parking_boy VALUES(1,'zhangsan')");
 		List<ParkingBoy> parkingBoyList = parkingBoyMapper.selectAll();
-
 		String getString = ObjectMapper.writeValueAsString(parkingBoyList);
-		this.mockMvc.perform(get("/parkingboys")).andDo(print()).andExpect(status().isOk())
+		
+		//then
+		this.mockMvc.perform(get("/parkingboys")).andDo(print())
+		.andExpect(status().isOk())
 				.andExpect(content().json(getString));
 	}
 
@@ -67,6 +75,7 @@ public class ParkingBoyControllerTest {
 	public void shouldReturnParkingLotList() throws Exception {
 		jdbcTemplate.execute("INSERT INTO parking_boy VALUES(1,'zhangsan')");
 		jdbcTemplate.execute("INSERT INTO parking_lot VALUES(1,10,10,1)");
+	    jdbcTemplate.execute("INSERT INTO parking_lot VALUES(2,10,10,1)");
 		ParkingBoy parkingBoy = parkingBoyMapper.selectById(1);
 		List<ParkingLot> parkingLots = parkingLotMapper.selectByParkingBoyId(1);
 		parkingBoy.setParkingLots(parkingLots);
@@ -82,6 +91,7 @@ public class ParkingBoyControllerTest {
 	public void shouldReturnCreateCompany() throws Exception {
 		ParkingBoy parkingBoy = new ParkingBoy(3, "asfas");
 		String postString = ObjectMapper.writeValueAsString(parkingBoy);
+		
 		this.mockMvc
 				.perform(MockMvcRequestBuilders.post("/parkingboys")
 						.contentType(MediaType.APPLICATION_JSON)
@@ -90,4 +100,10 @@ public class ParkingBoyControllerTest {
 				.andExpect(content().json(postString));
 	}
 
+	@Test
+	public void shouldReturnBadRequst() throws Exception {
+		Integer id =null;
+		this.mockMvc.perform(get("/parkingboys/"+id +"/parkinglots"))
+		.andDo(print()).andExpect(status().isBadRequest());
+	}
 }
