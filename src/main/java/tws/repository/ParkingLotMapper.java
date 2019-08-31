@@ -1,23 +1,25 @@
 package tws.repository;
 
 import java.util.List;
+import java.util.Map;
 
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 import tws.entity.ParkingLot;
 
 @Mapper
 public interface ParkingLotMapper {
 
-	@Select("select * from parking_lot")
-	List<ParkingLot> selectAll();
+    List<ParkingLot> select();
+    
+    List<ParkingLot> selectByParkingBoyId(@Param("parkingBoyId")String parkingBoyId);
+    
+    List<ParkingLot> selectByPage(@Param("map") Map<String, Integer> map);
+    
+	int insert(@Param("parkingLot") ParkingLot parkingLot);
 	
-	@Select("select * from parking_lot where parkingBoyId = #{parkingBoyId}")
-	List<ParkingLot> selectByParkingBoyId(@Param("parkingBoyId")int parkingBoyId);
+	int update(@Param("id")String id,@Param("parkingLot") ParkingLot parkingLot);
 	
-	@Insert("insert into parking_lot values(#{parkingLot.parkingLotId},#{parkingLot.availablePositionCount},#{parkingLot.capatity},#{parkingLot.parkingBoyId})")
-	void insert(@Param("parkingLot") ParkingLot parkingLot);
+	int deleteById(@Param("id")String id);
 }

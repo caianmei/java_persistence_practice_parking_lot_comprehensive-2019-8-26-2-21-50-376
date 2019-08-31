@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ParkingBoy {
 
-	private int employeeId;
+	private String employeeId;
 	private String name;
 
 	private List<ParkingLot> parkingLots = new ArrayList<ParkingLot>();
@@ -14,16 +14,16 @@ public class ParkingBoy {
 		
 	}
 	
-	public ParkingBoy(int employeeId,String name) {
+	public ParkingBoy(String employeeId,String name) {
 		this.employeeId = employeeId;
 		this.name = name;
 	}
 	
-	public int getEmployeeId() {
+	public String getEmployeeId() {
 		return employeeId;
 	}
 
-	public void setEmployeeId(int employeeId) {
+	public void setEmployeeId(String employeeId) {
 		this.employeeId = employeeId;
 	}
 
